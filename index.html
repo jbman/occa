@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OCCA - OIDC Client Application</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./node_modules/picnic/picnic.min.css"/>
+    <link rel="stylesheet" href="src/styles.css" />
+    <script type="module" src="src/main.js"></script>
+  </head>
+
+  <body>
+    <nav>
+      <a href="#welcome" class="brand">
+        <svg height="60px" width="120px" xmlns="http://www.w3.org/2000/svg" aria-label="OCCA">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 116.417 47.625" color="white"><g transform="translate(0 -249.375)"><g aria-label="OCCA" style="font-style:normal;font-weight:400;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0;word-spacing:0;fill:currentColor;fill-opacity:1;stroke:none"><path d="M180.645 105.857v3.75q0 7.735-2.016 13.875-2.016 6.141-5.766 10.454-3.703 4.312-8.906 6.609-5.203 2.25-11.531 2.25-6.281 0-11.485-2.25-5.156-2.297-8.953-6.61-3.797-4.312-5.906-10.453-2.062-6.14-2.062-13.875v-3.75q0-7.734 2.062-13.828 2.063-6.14 5.813-10.453 3.796-4.36 8.953-6.61 5.203-2.296 11.484-2.296 6.328 0 11.531 2.297 5.203 2.25 8.953 6.61 3.75 4.312 5.766 10.452 2.063 6.094 2.063 13.828zm-11.766 3.75v-3.843q0-5.72-1.125-10.078-1.078-4.407-3.234-7.36-2.11-3-5.204-4.5-3.093-1.547-6.984-1.547-3.89 0-6.937 1.547-3.047 1.5-5.204 4.5-2.109 2.953-3.234 7.36-1.125 4.359-1.125 10.078v3.843q0 5.72 1.125 10.125 1.125 4.407 3.281 7.454 2.203 3 5.25 4.546 3.047 1.5 6.938 1.5 3.937 0 6.984-1.5 3.047-1.546 5.156-4.546 2.11-3.047 3.188-7.454 1.125-4.406 1.125-10.125zM232.676 119.639h11.719q-.563 6.703-3.75 11.953-3.188 5.203-8.954 8.203-5.765 3-14.015 3-6.328 0-11.39-2.25-5.063-2.297-8.673-6.469-3.61-4.219-5.531-10.172-1.875-5.953-1.875-13.312v-5.672q0-7.36 1.922-13.313 1.969-5.953 5.625-10.171 3.656-4.266 8.766-6.516 5.156-2.25 11.578-2.25 8.156 0 13.78 3 5.626 3 8.72 8.297 3.14 5.297 3.843 12.14h-11.718q-.47-4.406-2.063-7.546-1.547-3.141-4.594-4.782-3.046-1.687-7.968-1.687-4.032 0-7.032 1.5t-5.015 4.406q-2.016 2.906-3.047 7.172-.984 4.219-.984 9.656v5.766q0 5.156.89 9.375.938 4.172 2.813 7.172 1.922 3 4.875 4.64 2.953 1.64 7.078 1.64 5.015 0 8.11-1.593 3.14-1.594 4.734-4.64 1.64-3.094 2.156-7.547zM295.348 119.639h11.718q-.562 6.703-3.75 11.953-3.187 5.203-8.953 8.203-5.765 3-14.015 3-6.328 0-11.391-2.25-5.062-2.297-8.672-6.469-3.61-4.219-5.531-10.172-1.875-5.953-1.875-13.312v-5.672q0-7.36 1.922-13.313 1.969-5.953 5.625-10.171 3.656-4.266 8.765-6.516 5.157-2.25 11.579-2.25 8.156 0 13.78 3 5.626 3 8.72 8.297 3.14 5.297 3.843 12.14h-11.718q-.47-4.406-2.063-7.546-1.547-3.141-4.594-4.782-3.047-1.687-7.968-1.687-4.032 0-7.032 1.5t-5.015 4.406q-2.016 2.906-3.047 7.172-.985 4.219-.985 9.656v5.766q0 5.156.891 9.375.938 4.172 2.813 7.172 1.921 3 4.875 4.64 2.953 1.64 7.078 1.64 5.015 0 8.109-1.593 3.14-1.594 4.734-4.64 1.641-3.094 2.157-7.547zM344.285 82.701l-20.39 59.156h-12.329l25.688-68.25h7.875zm17.063 59.156L340.91 82.701l-.89-9.094h7.921l25.782 68.25zm-.985-25.312v9.328h-37.125v-9.328z" style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:96px;font-family:Roboto;-inkscape-font-specification:&quot;Roboto Medium&quot;" transform="matrix(.26458 0 0 .26458 7.118 244.435)"/></g><circle cx="21.668" cy="273.188" r="10" style="fill:none;fill-opacity:1;stroke:currentColor;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="21.668" cy="273.129" r="2.899" style="fill:currentColor;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><path d="M21.668 269.082v-2.479M25.636 273.05h2.479M15.221 273.05H17.7M24.474 270.244l1.753-1.752M17.11 268.492l1.752 1.752" style="fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><rect width="3" height="4" x="20.168" y="274.196" ry=".514" style="fill:currentColor;fill-opacity:1;stroke:none;stroke-width:2.86801195;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><path d="M-16.9-264.6a5.061 5.061 0 0 1-1.803 5.798 5.061 5.061 0 0 1-6.07-.105 5.061 5.061 0 0 1-1.602-5.857" style="fill:none;fill-opacity:1;stroke:currentColor;stroke-width:2.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" transform="scale(-1)"/></g></svg>
+        </svg>
+      </a>
+      <input id="bmenu" type="checkbox" class="show">
+      <label for="bmenu" class="burger toggle pseudo button">&#9776;</label>
+      <div class="menu" id="menu-occa">
+        <a href="#welcome" class="pseudo button">Welcome</a>
+        <a href="#configuration" class="pseudo button">Configuration</a>
+        <label for="bmenub" class="burger pseudo button">menu</label>
+        <a href="#request" class="pseudo button">Request</a>
+        <a href="#response" class="pseudo button">Response</a>
+        <a href="#register-client" class="pseudo button">Register Client</a>
+        <a href="#about" class="pseudo button">About</a>
+      </div>
+    </nav>    
+    <main class="content">
+      <section id="welcome">
+        <h2>Hi, my name is OCCA</h2>
+        <p>
+          I'm an OpenID Connect Client Application. You can execute OAuth 2.0 requests with me. 
+        </p>
+        <p>
+          Make sure to <a href="#register-client">register me as OAuth Client</a> with redirect URI <code id=redirectUri></code>.
+        </p>
+      </section>  
+      <section id="configuration">
+        <h2>Configuration</h3>
+        <div class="config">
+          <div class="stack">
+            <label for="clientId">Client ID</label>
+            <input id="clientId" type="text" placeholder="my-client-id" />
+          </div>        
+          <h4>Endpoints</h4>
+          <div class="stack">
+            <label for="discoveryEndpoint">Discovery Endpoint <a
+              target="_blank"
+              href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata"
+              >ⓘ</a
+            ></label>
+            <span class="configValue"><input
+              id="discoveryEndpoint"
+              type="text"
+              placeholder="https://example.com/auth/.well-known/openid-configuration"
+            />
+            <button id="discoveryButton" class="secondaryAction"
+              data-tooltip="Load other endpoints from discovery document" class="tooltip-top">Load</button>
+          </div>        
+          <div class="stack">
+            <label for="authorizationEndpoint">Authorization Endpoint</label>
+            <input class="configValue"
+              id="authorizationEndpoint"
+              type="text"
+              placeholder="https://example.com/auth"
+            />
+          </div>
+          <div class="stack">
+            <label for="tokenEndpoint">Token Endpoint</label>
+            <input class="configValue"
+              id="tokenEndpoint"
+              type="text"
+              placeholder="https://example.com/token"
+            />
+          </div>
+          <div class="stack">
+            <label for="userinfoEndpoint">Userinfo Endpoint</label>
+            <input
+              id="userinfoEndpoint"
+              type="text"
+              placeholder="https://example.com/userinfo"
+            />
+          </div>
+          <div class="stack">
+            <label for="logoutEndpoint">Logout Endpoint</label>
+            <input
+              id="logoutEndpoint"
+              type="text"
+              placeholder="https://example.com/logout"
+            />
+          </div>        
+          <h4>Request</h4>        
+          <div class="stack">
+            <label for="scope"
+              >Scope
+              <a
+                target="_blank"
+                href="https://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims"
+                >ⓘ</a
+              ></label
+            >
+            <input id="scope" type="text" placeholder="openid" />
+          </div>
+          <div class="stack">
+            <label for="authParams"
+              >Additional auth params
+              <a
+                target="_blank"
+                href="https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest"
+                >ⓘ</a
+              >
+            </label>
+            <input
+              id="authParams"
+              type="text"
+              placeholder="prompt=login&login_hint=user@example.org"
+            />
+          </div>
+          <div class="stack">
+            <label></label>
+            <button id="resetConfig" class="secondaryAction" 
+              data-tooltip="Configuration is stored automtically when OAuth login is started. Reset to defaults here." class="tooltip-top">
+              Reset config
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="request">
+        <h2>Login Request</h2>
+        <button id="startButton" class="primaryAction">
+          Start OAuth login
+        </button>
+
+        <button id="refreshButton" class="pseudo" hidden=true>
+          Refresh
+        </button>
+
+        <button id="userinfoButton" class="pseudo" hidden=true>
+          Userinfo Request
+        </button>
+        
+        <button id="logoutButton" class="pseudo" hidden=true>
+          Logout
+        </button>
+
+        <div id="notificationContainer"></div>            
+      </section>
+
+      <section id="response">
+        <h2>Login Response</h2>
+        <div class="tabs four">
+          <input id="tab-response" type="radio" name="tabgroupResult" checked />
+          <label class="pseudo button toggle" for="tab-response">Response</label>
+          <input id="tab-idToken" type="radio" name="tabgroupResult" />
+          <label class="pseudo button toggle" for="tab-idToken">ID Token</label>
+          <input id="tab-accessToken" type="radio" name="tabgroupResult" />
+          <label class="pseudo button toggle" for="tab-accessToken"
+            >Access Token</label
+          >
+          <input id="tab-userinfoToken" type="radio" name="tabgroupResult" />
+          <label class="pseudo button toggle" for="tab-userinfoToken">User Info</label>
+          <div class="row">
+            <div>
+              <div id="responseContainer" style="overflow-x: auto;">
+                <p>Response from token endpoint will show up here.</p>
+              </div>
+            </div>
+            <div>
+              <div id="idTokenContainer">
+                <p>ID Token claims will show up here.</p>
+              </div>
+            </div>
+            <div>
+              <div id="accessTokenContainer">
+                <p>Access Token claims will show up here.</p>
+              </div>
+            </div>
+            <div>
+              <div id="userinfoContainer">
+                <p>User Info response will show up here.</p>
+              </div>
+            </div>          
+          </div>
+        </div>
+
+        <div id="storedTokens" hidden="true">
+          <header>
+            <h3>Keycloak - Stored IdP tokens</h3>
+          </header>
+          <div class="tabs three">
+            <input id="tab-idp-response" type="radio" name="tabgroupIdpResult" checked />
+            <label class="pseudo button toggle" for="tab-idp-response">Response</label>
+            <input id="tab-idp-idToken" type="radio" name="tabgroupIdpResult" />
+            <label class="pseudo button toggle" for="tab-idp-idToken">IdP ID Token</label>
+            <input id="tab-idp-accessToken" type="radio" name="tabgroupIdpResult" />
+            <label class="pseudo button toggle" for="tab-idp-accessToken"
+              >IdP Access Token</label
+            >
+            <div class="row">
+              <div>
+                <div id="idpResponseContainer" style="overflow-x: auto;">
+                  <p></p>
+                </div>
+              </div>
+              <div>
+                <div id="idpIdTokenContainer">
+                  <p></p>
+                </div>
+              </div>
+              <div>
+                <div id="idpAccessTokenContainer">
+                  <p></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="register-client">
+        <h2>Register Client</h2>
+        <p>
+          Before this application can initiate an OAuth2 login choose one of the options below to register the client.
+          Note: Automated registration is usually not possible by a browser-only application, as cross-origin requests to the registration endpoint isn't allowed.
+        </p>
+
+        <h3>A) Configure the client manually</h3> 
+        <p>
+          Add the client through the admin interface of your server:
+          <ul>
+            <li>Client ID: occa</li>
+            <li>Redirect URIs: https://m4hl15.csb.app/code</li>
+            <li>Allowed web origins for cross-origin requests: https://m4hl15.csb.app</li>
+            <li><i>Authorization Code Flow</i> enabled<br/>
+              See OAuth 2.0 RFC 6749 section 4.1 or OpenID Connect Core 1.0 section 3.1
+            </li>
+            <li><i>PKCE</i> enabled with Code Challenge method <i>SHA256</i></li>
+          </ul>
+
+        </p>  
+
+        <h3>B) Client registration at Keyclaok</h3>
+        <p>For client registration at Keycloak you can use an initial access token. Create this token at the Keycloak Admin Console:</p>
+        <ol>
+          <li>Open screen <i>Clients > Initial access token</i></li>
+          <li>Click <i>Create</i>, <i>Save</i> and then copy the token</li>
+        </ol>
+        <p>Call the Keyclaok Client registration API endpoint with a HTTP client of your choice, e.g. curl.</p>
+        <b>Example: Keycloak client registration request</b>        
+        <textarea id="keycloakCurlRequest" readonly="true" rows=14 style="font-size: small;">
+curl --request POST \
+--url http://localhost:8080/realms/my-realm/clients-registrations/default \
+--header 'authorization: Bearer <your initial access token>' \
+--header 'content-type: application/json' \
+--data '{ 
+  "clientId": "occa",
+  "publicClient": true,
+  "rootUrl": "https://m4hl15.csb.app",
+  "redirectUris": ["/code"],
+  "webOrigins": ["+"],
+  "attributes": {
+    "post.logout.redirect.uris": "/"
+  }
+}'</textarea>
+        <button class="secondaryAction" onclick="navigator.clipboard.writeText(document.getElementById('keycloakCurlRequest').value)">
+          Copy to clipboard
+        </button>
+
+        <h3>C) Dynamic client registration</h3> 
+        <p>
+          This client could be registered at the authorization server with the <a href="https://openid.net/specs/openid-connect-registration-1_0.html">OpenID Connect Dynamic Client Registration</a> protocol. 
+          With this method, you get back the client ID in the response of the server.
+          You may need to add a server specific authorization token or policy which allows this registration.
+        </p>
+        <p>
+          In Keycloak you can modify the <i>Trusted Hosts</i> client registration policy:
+          <ul>
+            <li>Trusted Hosts: m4hl15.csb.app</li>
+            <li>Host Sending Client Registration Request Must Match: OFF</li>
+            <li>Client URIs Must Match: ON</li>
+          </ul>
+        </p>
+        <b>Example: Dynamic client registration request</b>
+        <textarea id="dyanmicClientRegistrationCurlRequest" readonly="true" rows=9 style="font-size: small;">
+curl --request POST \
+--url http://localhost:8080/realms/test/clients-registrations/openid-connect \
+--header 'content-type: application/json' \
+--data '{
+  "client_name": "OCCA",
+  "redirect_uris": [ "https://m4hl15.csb.app/code"],
+  "grant_types": ["authorization_code","refresh_token"],
+  "token_endpoint_auth_method": "none"
+}'</textarea>
+        <button class="secondaryAction" onclick="navigator.clipboard.writeText(document.getElementById('dyanmicClientRegistrationCurlRequest').value)">
+          Copy to clipboard
+        </button>
+        <p>When you have a response from the server, find the client_id value and use it in the <a href="#configuration">configuration</a> of this client application.
+      </section>
+
+      <section id="about">
+        <h2>About</h2>        
+        <p>This application allows to test login with any OpenID Connect Identity provider. 
+           It is an OpenID connect client application running in the browser (Single-page application). It uses zero librraries for OAuth or OpenID Connect. All features are implenmented with HTML and Javascript.
+        </p>
+        <p>
+          In combination with an Open Source authorization server like <a href="https://www.keycloak.org/">Keycloak</a> the application helps to learn how OAuth 2.0 and OpenID Connect works. 
+          As the application shows the tokens it also allows to debug configuration problems at your authorization server.
+        </p>
+        <p style="font-size: small;">
+          The source code of the application can be browsed or forked at <a href="https://codesandbox.io/s/m4hl15">Codesandbox m4hl15</a>.
+          <br/>
+          Usage of this page and the source code allowed for non-commercial purposes under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en>">CC BY-NC-SA 4.0</a>
+          <br/>
+          ©2025 Johannes Bergmann
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

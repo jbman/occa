@@ -1,0 +1,118 @@
+:root {
+  --color-green-90: #b8efc9;
+  --color-blue-90:#d1e4ff;
+  --color-red-90: #ffd9d9;
+
+  --color-purple-90: #f0dcee;
+  --color-purple-40: #9e2896;
+
+  --color-menubar-background: var(--color-purple-40);
+  --color-menubar-font: white;
+}
+
+body {
+  font-family: sans-serif;
+  font-size: medium;
+}
+
+nav {
+  background-color: var(--color-menubar-background);
+  color: var(--color-menubar-font);
+}
+
+#menu-occa {
+  background-color: var(--color-menubar-background);
+}
+
+section {
+  scroll-margin-top: 4rem;
+  padding-bottom: 0.5rem;
+  padding-left: 2rem;
+}
+
+/* Mark currect section with a bar at the left */
+section:target {
+ background-color: white; 
+ background-image: linear-gradient(to right, var(--color-purple-40) 0.5rem, rgba(0,0,0,0) 0.5rem); 
+}
+
+.content {
+  margin-top: 4rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.config label {
+  display: inline-block;
+  width: 20%;
+}
+
+.config input {
+  width: 70%;
+}
+
+.primaryAction {
+  background: var(--color-purple-40);
+}
+
+.secondaryAction {
+  font-size: 0.75em;
+  background-color: lightgray;
+  color: black;
+}
+
+/* Notification styling */
+#notificationContainer {
+  height: 3rem;
+  overflow: hidden;
+}
+
+.notification {
+  display: block;
+  box-sizing: border-box;  
+  vertical-align:middle;
+  animation: cssAnimation 5s forwards; /* Auto hide */
+}
+
+@keyframes cssAnimation {
+  0%   {opacity: 1;}
+  80%  {opacity: 1;}
+  100% {opacity: 0;}      
+}
+
+.notification .alert {
+  padding: 10px;
+  margin: 0.5em;
+}
+
+.notification .alertCheckbox {
+  display: none;
+}
+
+.notification :checked + .alert {
+  display: none;
+}
+
+.notification .alertText {
+  padding: 6px;
+}
+
+.notification .alertClose {
+  float:right;
+}
+
+.notification .success {
+  background-color: var(--color-green-90);
+}
+
+.notification .info {
+  background-color: var(--color-blue-90);
+}
+
+.notification .error {
+  background-color: var(--color-red-90);
+}
