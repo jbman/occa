@@ -21,8 +21,9 @@ const defaultConfig = {
 };
 
 // Append /code to application URL and reomve URL hash #...
-const redirectURL = new URL("/code", window.location.href);
-redirectURL.hash="";
+const redirectURL = new URL(window.location.href);
+redirectURL.hash = '';
+redirectURL.pathname = (redirectURL.pathname.endsWith('/') ? "": "/") + "code";
 const redirectUri = redirectURL.href;
 
 // Render redirectUri
