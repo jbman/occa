@@ -7,7 +7,7 @@ import Logout from "./logout/logout";
 import Refresh from "./refresh/refresh";
 import Userinfo from "./userinfo/userinfo";
 import Discovery from "./util/discovery";
-import OpenRedirect from "./vulnerabilities/openRedirect";
+import ClientRegistration from "./register/clientRegistrationRequests";
 
 const defaultConfig = {
   clientId: "occa",
@@ -24,8 +24,11 @@ const defaultConfig = {
 const redirectURL = new URL(window.location.href);
 redirectURL.hash = '';
 redirectURL.search = '';
+if (redirectURL.pathname.endsWith('/'))
 redirectURL.pathname = redirectURL.pathname + (redirectURL.pathname.endsWith('/') ? "": "/");
 const redirectUri = redirectURL.href;
+// Remove trailing lsash to get the root URL
+const rootUrl = redirectUri.slice(0, redirectUri.length-1);
 
 // Render redirectUri
 document.getElementById("redirectUri").innerHTML = redirectUri;
@@ -93,6 +96,13 @@ const handleTokenError = function (response) {
       : `Token endpoint ${config.tokenEndpoint} returned ${xhr.status} ${xhr.statusText}`
   );
 };
+
+// Render client registration requests
+ClientRegistration.render({
+  rootUrl: rootUrl,
+  redirectUri: redirectUri,
+  clientId: config.clientId
+});
 
 // Initialize "Load Discovery document" functionality and handle discovery doeument response
 Discovery.init(

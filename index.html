@@ -230,16 +230,7 @@
         <h3>A) Configure the client manually</h3> 
         <p>
           Add the client through the admin interface of your server:
-          <ul>
-            <li>Client ID: occa</li>
-            <li>Redirect URIs: https://m4hl15.csb.app/code</li>
-            <li>Allowed web origins for cross-origin requests: https://m4hl15.csb.app</li>
-            <li><i>Authorization Code Flow</i> enabled<br/>
-              See OAuth 2.0 RFC 6749 section 4.1 or OpenID Connect Core 1.0 section 3.1
-            </li>
-            <li><i>PKCE</i> enabled with Code Challenge method <i>SHA256</i></li>
-          </ul>
-
+          <div id="configureClientManually"></div>
         </p>  
 
         <h3>B) Client registration at Keycloak</h3>
@@ -250,21 +241,7 @@
         </ol>
         <p>Call the Keycloak Client registration API endpoint with a HTTP client of your choice, e.g. curl.</p>
         <b>Example: Keycloak client registration request</b>        
-        <textarea id="keycloakCurlRequest" readonly="true" rows=14 style="font-size: small;">
-curl --request POST \
---url http://localhost:8080/realms/my-realm/clients-registrations/default \
---header 'authorization: Bearer <your initial access token>' \
---header 'content-type: application/json' \
---data '{ 
-  "clientId": "occa",
-  "publicClient": true,
-  "rootUrl": "https://m4hl15.csb.app",
-  "redirectUris": ["/code"],
-  "webOrigins": ["+"],
-  "attributes": {
-    "post.logout.redirect.uris": "/"
-  }
-}'</textarea>
+        <textarea id="keycloakCurlRequest" readonly="true" rows=14 style="font-size: small;"></textarea>
         <button class="secondaryAction" onclick="navigator.clipboard.writeText(document.getElementById('keycloakCurlRequest').value)">
           Copy to clipboard
         </button>
@@ -277,23 +254,10 @@ curl --request POST \
         </p>
         <p>
           In Keycloak you can modify the <i>Trusted Hosts</i> client registration policy:
-          <ul>
-            <li>Trusted Hosts: m4hl15.csb.app</li>
-            <li>Host Sending Client Registration Request Must Match: OFF</li>
-            <li>Client URIs Must Match: ON</li>
-          </ul>
+          <div id="keycloakTrustedHostsRegistrationPolicy"></div>
         </p>
         <b>Example: Dynamic client registration request</b>
-        <textarea id="dyanmicClientRegistrationCurlRequest" readonly="true" rows=9 style="font-size: small;">
-curl --request POST \
---url http://localhost:8080/realms/test/clients-registrations/openid-connect \
---header 'content-type: application/json' \
---data '{
-  "client_name": "OCCA",
-  "redirect_uris": [ "https://m4hl15.csb.app/code"],
-  "grant_types": ["authorization_code","refresh_token"],
-  "token_endpoint_auth_method": "none"
-}'</textarea>
+        <textarea id="dyanmicClientRegistrationCurlRequest" readonly="true" rows=9 style="font-size: small;"></textarea>
         <button class="secondaryAction" onclick="navigator.clipboard.writeText(document.getElementById('dyanmicClientRegistrationCurlRequest').value)">
           Copy to clipboard
         </button>
