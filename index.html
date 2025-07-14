@@ -34,7 +34,7 @@
           I'm an OpenID Connect Client Application. You can execute OAuth 2.0 requests with me. 
         </p>
         <p>
-          Make sure to <a href="#register-client">register me as OAuth Client</a> with redirect URI <code id=redirectUri></code>.
+          Make sure to <a href="#register-client">register me as an OAuth Client</a> with redirect URI <code id=redirectUri></code>.
         </p>
       </section>  
       <section id="configuration">
@@ -224,7 +224,7 @@
         <h2>Register Client</h2>
         <p>
           Before this application can initiate an OAuth2 login choose one of the options below to register the client.
-          Note: Automated registration is usually not possible by a browser-only application, as cross-origin requests to the registration endpoint isn't allowed.
+          Note: Automated registration is usually not possible for a browser-only application, as cross-origin requests to the registration endpoint aren't allowed.
         </p>
 
         <h3>A) Configure the client manually</h3> 
@@ -242,13 +242,13 @@
 
         </p>  
 
-        <h3>B) Client registration at Keyclaok</h3>
+        <h3>B) Client registration at Keycloak</h3>
         <p>For client registration at Keycloak you can use an initial access token. Create this token at the Keycloak Admin Console:</p>
         <ol>
           <li>Open screen <i>Clients > Initial access token</i></li>
           <li>Click <i>Create</i>, <i>Save</i> and then copy the token</li>
         </ol>
-        <p>Call the Keyclaok Client registration API endpoint with a HTTP client of your choice, e.g. curl.</p>
+        <p>Call the Keycloak Client registration API endpoint with a HTTP client of your choice, e.g. curl.</p>
         <b>Example: Keycloak client registration request</b>        
         <textarea id="keycloakCurlRequest" readonly="true" rows=14 style="font-size: small;">
 curl --request POST \
@@ -302,8 +302,7 @@ curl --request POST \
 
       <section id="about">
         <h2>About</h2>        
-        <p>This application allows to test login with any OpenID Connect Identity provider. 
-           It is an OpenID connect client application running in the browser (Single-page application). It uses zero librraries for OAuth or OpenID Connect. All features are implenmented with HTML and Javascript.
+        <p>This is an OpenID connect client application running in the browser (Single-page application). It allows testing OAuth2 or OpenID Connect based login with custom scopes and URL parameters. The application uses zero libraries for OAuth or OpenID Connect. All features are implenmented using HTML and Javascript.
         </p>
         <p>
           In combination with an Open Source authorization server like <a href="https://www.keycloak.org/">Keycloak</a> the application helps to learn how OAuth 2.0 and OpenID Connect works. 
