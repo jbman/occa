@@ -11,7 +11,7 @@ import OpenRedirect from "./vulnerabilities/openRedirect";
 
 const defaultConfig = {
   clientId: "occa",
-  discoveryEndpoint: "http://example.com/auth/realms/master/.well-known/openid-configuration",
+  discoveryEndpoint: "https://example.com/auth/realms/master/.well-known/openid-configuration",
   authorizationEndpoint: "",
   tokenEndpoint: "",
   logoutEndpoint: "",
@@ -20,7 +20,10 @@ const defaultConfig = {
   authParams: "",
 };
 
-const redirectUri = "https://" + window.location.host + "/code";
+// Append /code to application URL and reomve URL hash #...
+const redirectURL = new URL("/code", window.location.href);
+redirectURL.hash="";
+const redirectUri = redirectURL.href;
 
 // Render redirectUri
 document.getElementById("redirectUri").innerHTML = redirectUri;
