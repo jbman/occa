@@ -11,7 +11,7 @@ import OpenRedirect from "./vulnerabilities/openRedirect";
 
 const defaultConfig = {
   clientId: "occa",
-  discoveryEndpoint: "https://p18.authz.bosch.com/auth/realms/example/.well-known/openid-configuration",
+  discoveryEndpoint: "http://example.com/auth/realms/master/.well-known/openid-configuration",
   authorizationEndpoint: "",
   tokenEndpoint: "",
   logoutEndpoint: "",
