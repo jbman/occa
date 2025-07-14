@@ -20,10 +20,11 @@ const defaultConfig = {
   authParams: "",
 };
 
-// Append /code to application URL and reomve URL hash #...
+// Redirection URI is same as application URL, but reomve nya parameters and hash (#) and append slash if missing
 const redirectURL = new URL(window.location.href);
 redirectURL.hash = '';
-redirectURL.pathname = redirectURL.pathname + (redirectURL.pathname.endsWith('/') ? "": "/") + "code";
+redirectURL.search = '';
+redirectURL.pathname = redirectURL.pathname + (redirectURL.pathname.endsWith('/') ? "": "/");
 const redirectUri = redirectURL.href;
 
 // Render redirectUri
@@ -144,45 +145,37 @@ Userinfo.init(
   }
 );
 
-// An open rdirect vulnerability under path /forward which also sends all original URL query parameters
-if(window.location.pathname === "/forward") {
-  OpenRedirect.forward(window);
-}
 
-// Check if code is provided on callback from auth server
-if (window.location.pathname === "/code") {
-  var args = new URLSearchParams(window.location.search);
-  var code = args.get("code");
-
-  if (code) {
-    var xhr = new XMLHttpRequest();
-
-    xhr.onload = function () {
-      var response = xhr.response;
-      if (xhr.status === 200) {
-        handleTokenResponse(response);
-        Render.notifySuccess("Login successful, tokens retrieved.");
-        BrokeredToken.fetchIdpIdToken(response.access_token, response.id_token);
-      } else {
-        handleTokenError(response);
-      }
-      // Set navigation state to top-level URL without URL params
-      history.pushState("", document.title, window.location.origin);
-    };
-    xhr.responseType = "json";
-    xhr.open("POST", config.tokenEndpoint, true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send(
-      new URLSearchParams({
-        client_id: config.clientId,
-        code_verifier: window.sessionStorage.getItem("code_verifier"),
-        grant_type: "authorization_code",
-        redirect_uri: location.href.replace(location.search, ""),
-        code: code,
-      })
-    );
-  }
-
+// Check if code is provided on callback from auth server at "/code" or 
+const args = new URLSearchParams(window.location.search);
+const code = args.get("code");
+if (code) {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    var response = xhr.response;
+    if (xhr.status === 200) {
+      handleTokenResponse(response);
+      Render.notifySuccess("Login successful, tokens retrieved.");
+      BrokeredToken.fetchIdpIdToken(response.access_token, response.id_token);
+    } else {
+      handleTokenError(response);
+    }
+    // Set navigation state to top-level URL without URL params
+    history.pushState("", document.title, window.location.origin);
+  };
+  xhr.responseType = "json";
+  xhr.open("POST", config.tokenEndpoint, true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.send(
+    new URLSearchParams({
+      client_id: config.clientId,
+      code_verifier: window.sessionStorage.getItem("code_verifier"),
+      grant_type: "authorization_code",
+      redirect_uri: location.href.replace(location.search, ""),
+      code: code,
+    })
+  );
+  // Dsiplay error_description if provided as URL parameter by authorization server.
   let errorDescription = args.get("error_description");
   if (errorDescription) {
     Render.renderLoginError("Error on login", errorDescription);

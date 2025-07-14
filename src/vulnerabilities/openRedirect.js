@@ -1,10 +1,9 @@
-
-/**
- * This feature introduces an open redirect into the application.
- * 
- * Example:
- * ?response_type=code&client_id=occa&redirect_uri=https%3A%2F%2Fm4hl15.csb.app%2Fforward%3Furl%3Dhttps%3A%2F%2Fexample.com
-*/
+// This forward feature introduces an open redirect into the application.
+//
+// Redirect URI which forwards the code to example.com: https://occa.app/forward?url=https://example.com
+// 
+// This URL must be encoded and used as redirect URI in the authorizaton request:
+// ?response_type=code&client_id=occa&redirect_uri=https%3A%2F%2Focca.app%2Fforward%3Furl%3Dhttps%3A%2F%2Fexample.com
 
 // Tries to find an URL parameter in the current location and forwards to this URL.
 // All URL parameters and the hash are passed to the given URL.
@@ -26,7 +25,8 @@ function forward(window) {
 
 }
 
-export default {
-    forward
-  };
+// Execute the forward
+forward(window);
+
+
   

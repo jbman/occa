@@ -2,7 +2,7 @@
   "name": "occa",
   "version": "1.0.0",
   "description": "",
-  "source": "index.html",  
+  "source": ["index.html", "forward.html"],
   "scripts": {
     "start": "parcel",
     "build": "parcel build --public-url ./"
