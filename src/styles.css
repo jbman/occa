@@ -46,7 +46,7 @@ section:target {
   padding-right: 1rem;
 }
 
-.config label {
+.config .stack label {
   display: inline-block;
   width: 20%;
 }
@@ -55,14 +55,35 @@ section:target {
   width: 70%;
 }
 
-.primaryAction {
+.button-primary {
   background: var(--color-purple-40);
 }
 
-.secondaryAction {
-  font-size: 0.75em;
-  background-color: lightgray;
-  color: black;
+.button-secondary {
+  &, &:hover, &:focus, &:active {
+    color: var(--color-purple-40);
+    background-color: white;
+    box-shadow:inset 0px 0px 0px 2px var(--color-purple-40);    
+  }
+  &:hover {
+    background-color: var(--color-purple-90)
+  }
+  &.small {
+    font-size: 0.75em;
+  }
+}
+
+.button-nav {
+  background-color: white;
+  color: var(--color-purple-40);
+  text-align: left;
+  padding: 0;
+  &:hover {
+    padding-left: 0.3em;
+  }
+  &::before {
+    content: "⟫ "
+  }
 }
 
 /* Notification styling */
@@ -73,15 +94,14 @@ section:target {
 
 .notification {
   display: block;
-  box-sizing: border-box;  
-  vertical-align:middle;
-  animation: cssAnimation 5s forwards; /* Auto hide */
+  box-sizing: border-box;
+  animation: hideAnimation 5s forwards; /* Auto hide */
 }
 
-@keyframes cssAnimation {
+@keyframes hideAnimation {
   0%   {opacity: 1;}
-  80%  {opacity: 1;}
-  100% {opacity: 0;}      
+  80%  {opacity: 1; height:auto}
+  100% {opacity: 0; height:0}
 }
 
 .notification .alert {
