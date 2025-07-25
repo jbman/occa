@@ -20,7 +20,15 @@ const defaultConfig = {
   authParams: "",
 };
 
-// Redirection URI is same as application URL, but reomve nya parameters and hash (#) and append slash if missing
+const ELEMENTS = {
+  resetNotification: "resetNotification",
+  loadDiscoveryNotification: "loadDiscoveryNotification",
+  refreshNotification: "refreshNotification",
+  userInfoNotification: "userInfoNotification",
+  loginNotification: "loginNotification"
+}
+
+// Redirection URI is same as application URL, but remove parameters and hash (#) and append slash if missing
 const redirectURL = new URL(window.location.href);
 redirectURL.hash = '';
 redirectURL.search = '';
@@ -69,13 +77,14 @@ document.getElementById("startButton").onclick = function () {
 // Button to reset config
 document.getElementById("resetConfig").onclick = function () {
   config = Config.reset(defaultConfig);
-  Render.notifySuccess('Configuration reset done.');
+  Render.notifySuccess('Configuration reset done.', ELEMENTS.resetNotification);
 };
 
 // Load config from session storage
 let config = Config.load(defaultConfig);
 // Merge parameters from URL into config
 config = Config.readFromUrl(config, new URLSearchParams(window.location.search).entries());
+Render.renderConfig(config);
 
 // When a token response is received, this function is called to render the response
 // and provide the reposne to other UI modules.
@@ -89,12 +98,7 @@ const handleTokenResponse = function (response) {
 
 // When the token request results in an error, this function is called to render the error
 const handleTokenError = function (response) {
-  Render.renderLoginError(
-    "Error requsting token",
-    response && response.error
-      ? `${response.error}: ${response.error_description}`
-      : `Token endpoint ${config.tokenEndpoint} returned ${xhr.status} ${xhr.statusText}`
-  );
+  Render.notifyError(`Error requsting token at token endpoint ${config.tokenEndpoint}: ${response.error} - ${response.error_description}`, ELEMENTS.loginNotification);
 };
 
 // Render client registration requests
@@ -116,10 +120,11 @@ Discovery.init(
       userinfoEndpoint: discoveryJSON.userinfo_endpoint,
       logoutEndpoint: discoveryJSON.end_session_endpoint,
     });
-    Render.notifySuccess(`Endpoints updated from discovery document ${discoveryEndpointUrl}.`);
+    Render.renderConfig(config);
+    Render.notifySuccess(`Endpoints updated from discovery document ${discoveryEndpointUrl}.`, ELEMENTS.loadDiscoveryNotification);
   },
   (discoveryEndpointUrl, errorMessage) => {
-    Render.notifyError(`Error response from ${discoveryEndpointUrl}: ${errorMessage}`);
+    Render.notifyError(`Error response from ${discoveryEndpointUrl}: ${errorMessage}`, ELEMENTS.loadDiscoveryNotification);
   }
 );
 // Load automatically, so that "Start login" could be used right away.
@@ -128,7 +133,7 @@ Discovery.load();
 // Initialize Refresh functionality
 Refresh.init(
   config, 
-  (response) => { handleTokenResponse(response); Render.notifySuccess("Refresh complete, tokens updated."); },
+  (response) => { handleTokenResponse(response); Render.notifySuccess("Refresh complete, tokens updated.", ELEMENTS.refreshNotification); },
   handleTokenError
 );
 
@@ -148,7 +153,7 @@ Userinfo.init(
   config,
   (response) => {
     Render.renderUserInfo(response);
-    Render.notifySuccess("User Info updated.");    
+    Render.notifySuccess("User Info updated.", ELEMENTS.userInfoNotification);    
   },
   (response) => {
     console.log("Error from userinfo endpoint: " + response);
@@ -165,7 +170,7 @@ if (code) {
     var response = xhr.response;
     if (xhr.status === 200) {
       handleTokenResponse(response);
-      Render.notifySuccess("Login successful, tokens retrieved.");
+      Render.notifySuccess("Login successful, tokens retrieved.", ELEMENTS.loginNotification);
       BrokeredToken.fetchIdpIdToken(response.access_token, response.id_token);
     } else {
       handleTokenError(response);
@@ -173,7 +178,9 @@ if (code) {
     // Remove query paremters (code and session_state) and set this as new browser location.
     const newUrl = new URL(window.location);
     newUrl.search = "";
-    history.pushState("", document.title, newUrl);    
+    history.pushState("", document.title, newUrl);
+    // Jump to Request and Response section
+    window.location.hash = "#request";
   };
   xhr.responseType = "json";
   xhr.open("POST", config.tokenEndpoint, true);
@@ -187,9 +194,12 @@ if (code) {
       code: code,
     })
   );
-  // Dsiplay error_description if provided as URL parameter by authorization server.
-  let errorDescription = args.get("error_description");
-  if (errorDescription) {
-    Render.renderLoginError("Error on login", errorDescription);
-  }
+}  
+
+// Check if error_description is provided as URL parameter by authorization server and show it
+const error = args.get("error");
+if (error) {
+  const errorDescription = args.get("error_description") || "- No description provided - ";
+  Render.notifyError(`Error ${error} on login: ${errorDescription}`, ELEMENTS.loginNotification);
 }
+

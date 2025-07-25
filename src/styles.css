@@ -1,6 +1,6 @@
 :root {
   --color-green-90: #b8efc9;
-  --color-blue-90:#d1e4ff;
+  --color-blue-90: #d1e4ff;
   --color-red-90: #ffd9d9;
 
   --color-purple-90: #f0dcee;
@@ -32,8 +32,12 @@ section {
 
 /* Mark currect section with a bar at the left */
 section:target {
- background-color: white; 
- background-image: linear-gradient(to right, var(--color-purple-40) 0.5rem, rgba(0,0,0,0) 0.5rem); 
+  background-color: white;
+  background-image: linear-gradient(
+    to right,
+    var(--color-purple-40) 0.5rem,
+    rgba(0, 0, 0, 0) 0.5rem
+  );
 }
 
 .content {
@@ -60,13 +64,16 @@ section:target {
 }
 
 .button-secondary {
-  &, &:hover, &:focus, &:active {
+  &,
+  &:hover,
+  &:focus,
+  &:active {
     color: var(--color-purple-40);
     background-color: white;
-    box-shadow:inset 0px 0px 0px 2px var(--color-purple-40);    
+    box-shadow: inset 0px 0px 0px 2px var(--color-purple-40);
   }
   &:hover {
-    background-color: var(--color-purple-90)
+    background-color: var(--color-purple-90);
   }
   &.small {
     font-size: 0.75em;
@@ -82,26 +89,18 @@ section:target {
     padding-left: 0.3em;
   }
   &::before {
-    content: "⟫ "
+    content: "⟫ ";
   }
 }
 
 /* Notification styling */
 #notificationContainer {
-  height: 3rem;
   overflow: hidden;
 }
 
 .notification {
   display: block;
   box-sizing: border-box;
-  animation: hideAnimation 5s forwards; /* Auto hide */
-}
-
-@keyframes hideAnimation {
-  0%   {opacity: 1;}
-  80%  {opacity: 1; height:auto}
-  100% {opacity: 0; height:0}
 }
 
 .notification .alert {
@@ -122,11 +121,27 @@ section:target {
 }
 
 .notification .alertClose {
-  float:right;
+  float: right;
 }
 
 .notification .success {
   background-color: var(--color-green-90);
+  height: 3em;
+  animation: hideAnimation 5s forwards; /* Auto hide */
+}
+
+@keyframes hideAnimation {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+    height: 3em;
+  }
+  100% {
+    opacity: 0;
+    height: 0;
+  }
 }
 
 .notification .info {

@@ -6,6 +6,12 @@ const formatterConfig = {
   animateClose: true,
 };
 
+function renderConfig(config) {
+  document
+  .getElementById("currentConfig")
+  .replaceChildren(new JSONFormatter(config, 1, formatterConfig).render());
+}
+
 function renderAuthResponse(response) {
   document
     .getElementById("responseContainer")
@@ -30,24 +36,13 @@ function renderAuthResponse(response) {
     );
 }
 
-function renderLoginError(title, text) {
-  document.getElementById(
-    "responseContainer"
-  ).innerHTML = `<article class="card error">
-  <header>
-    <h3>${title}</h3>
-  </header>
-  <p>${text}</p>
-  </article>`;
-}
-
 function renderUserInfo(response) {
   document
     .getElementById("userinfoContainer")
     .replaceChildren(new JSONFormatter(response, 2, formatterConfig).render());
 }
 
-function renderNotification(type, text) {
+function renderNotification(type, text, targetId) {
   const notification = document.createElement("label");
   notification.classList.add("notification");
   notification.innerHTML = 
@@ -56,24 +51,24 @@ function renderNotification(type, text) {
     <span class="alertClose">X</span>
     <span class="alertText">${text}</span>
   </div>`;
-  document.getElementById("notificationContainer").prepend(notification);
+  document.getElementById(targetId).replaceChildren(notification);
 }
 
-function notifySuccess(text) {
-  renderNotification("success", text)
+function notifySuccess(text, targetId) {
+  renderNotification("success", text, targetId)
 }
 
-function notifyInfo(text) {
-  renderNotification("info", text)
+function notifyInfo(text, targetId) {
+  renderNotification("info", text, targetId)
 }
 
-function notifyError(text) {
-  renderNotification("error", text)
+function notifyError(text, targetId) {
+  renderNotification("error", text, targetId)
 }
 
 export default {
+  renderConfig,
   renderAuthResponse,
-  renderLoginError,
   renderUserInfo,
   notifySuccess,
   notifyInfo,

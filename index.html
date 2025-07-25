@@ -31,81 +31,108 @@
       <section id="welcome">
         <h2>Hi, my name is OCCA</h2>
         <p>
-          I'm an OpenID Connect Client Application. You can execute OAuth 2.0 requests with me. 
+          I'm an OpenID Connect Client Application. I can help you learning and testing OAuth 2.0 and Open ID Connect login requests. 
         </p>
-        <p>
-          Make sure to <a href="#register-client">register me as an OAuth Client</a> with redirect URI <code id=redirectUri></code>.
-        </p>
-      </section>  
+      </section>
       <section id="configuration">
-        <h2>Configuration</h3>
+        <h2>Configuration</h2>
+        <div class="tabs three">
+          <input id="tab-storedConfiguration" type="radio" name="tabgroup-config" checked />
+          <label class="pseudo button toggle" for="tab-storedConfiguration">Stored configuration</label>
+          <input id="tab-clientId" type="radio" name="tabgroup-config" />
+          <label class="pseudo button toggle" for="tab-clientId">Client ID</label>
+          <input id="tab-endpoints" type="radio" name="tabgroup-config" />
+          <label class="pseudo button toggle" for="tab-endpoints">Endpoints</label>
+          <div class="row">
+            <div class="card">
+              <section>
+                <div>
+                  This configuration was loaded from browser session storage. Any updated values are written to storage on  login.
+                </div>
+                <button id="resetConfig" class="button-secondary" data-tooltip="Discards stored configuation and resets to defaults." class="tooltip-top">
+                  Reset config
+                </button>
+                <div id="resetNotification"/>
+                <div id="currentConfig"/>
+              </section>
+              <footer>
+                <label class="button button-nav" for="tab-clientId">Go to Client ID</label>
+              </footer>
+            </div>
+            <div class="card config">
+              <section>
+                <div>
+                  <a href="#register-client">Register a client</a> with this ID as OAuth client at the authorization server with redirect URI <code id=redirectUri></code>.                
+                </div>                 
+                <label for="clientId">Client ID</label>
+                <input id="clientId" type="text" placeholder="my-client-id" />                  
+              </section>
+              <footer>
+                <label class="button button-nav" for="tab-endpoints">Go to Endpoints</label>
+              </footer>
+            </div>
+            <div class="card config">
+              <section>
+                <div>
+                  The discovery endpoint should provide the OpenID Provider's configuration information as specified in <a href="https://openid.net/specs/openid-connect-discovery-1_0-errata1.html" target="_blank">OpenID Connect Discovery 1.0 incorporating errata set 1</a>.
+                  You can provide this endpoint and load the others from the discovery document.
+                </div>
+                <div class="stack">
+                  <label for="discoveryEndpoint">Discovery Endpoint</label>
+                  <span>
+                    <input id="discoveryEndpoint" type="text" placeholder="https://example.com/auth/.well-known/openid-configuration">
+                    <button id="discoveryButton" class="button button-primary">Load</button>
+                  </span>
+                </div>                  
+                <div class="stack">
+                  <label for="authorizationEndpoint">Authorization Endpoint</label>
+                  <input id="authorizationEndpoint" type="text" placeholder="https://example.com/auth" />
+                </div>
+                <div class="stack">
+                  <label for="tokenEndpoint">Token Endpoint</label>
+                  <input id="tokenEndpoint" type="text" placeholder="https://example.com/token" />
+                </div>
+                <div class="stack">
+                  <label for="userinfoEndpoint">Userinfo Endpoint</label>
+                  <input
+                  id="userinfoEndpoint"
+                  type="text"
+                  placeholder="https://example.com/userinfo"
+                  />
+                </div>
+                <div class="stack">
+                  <label for="logoutEndpoint">Logout Endpoint</label>
+                  <input
+                  id="logoutEndpoint"
+                  type="text"
+                  placeholder="https://example.com/logout"
+                  />
+                </div>
+                <div id="loadDiscoveryNotification"/>                
+              </section>
+              <footer>
+                <a class="button-nav" href="#request">Go to Login Request</a>
+              </footer>                        
+            </div>
+          </div>
+        </div>       
+      </section>
+
+      <section id="request">
+        <h2>Login Request</h2>
         <div class="config">
           <div class="stack">
-            <label for="clientId">Client ID</label>
-            <input id="clientId" type="text" placeholder="my-client-id" />
-          </div>        
-          <h4>Endpoints</h4>
-          <div class="stack">
-            <label for="discoveryEndpoint">Discovery Endpoint <a
-              target="_blank"
-              href="https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata"
-              >ⓘ</a
-            ></label>
-            <span class="configValue"><input
-              id="discoveryEndpoint"
-              type="text"
-              placeholder="https://example.com/auth/.well-known/openid-configuration"
-            />
-            <button id="discoveryButton" class="secondaryAction"
-              data-tooltip="Load other endpoints from discovery document" class="tooltip-top">Load</button>
-          </div>        
-          <div class="stack">
-            <label for="authorizationEndpoint">Authorization Endpoint</label>
-            <input class="configValue"
-              id="authorizationEndpoint"
-              type="text"
-              placeholder="https://example.com/auth"
-            />
-          </div>
-          <div class="stack">
-            <label for="tokenEndpoint">Token Endpoint</label>
-            <input class="configValue"
-              id="tokenEndpoint"
-              type="text"
-              placeholder="https://example.com/token"
-            />
-          </div>
-          <div class="stack">
-            <label for="userinfoEndpoint">Userinfo Endpoint</label>
-            <input
-              id="userinfoEndpoint"
-              type="text"
-              placeholder="https://example.com/userinfo"
-            />
-          </div>
-          <div class="stack">
-            <label for="logoutEndpoint">Logout Endpoint</label>
-            <input
-              id="logoutEndpoint"
-              type="text"
-              placeholder="https://example.com/logout"
-            />
-          </div>        
-          <h4>Request</h4>        
-          <div class="stack">
-            <label for="scope"
-              >Scope
+            <label for="scope">Scope
               <a
                 target="_blank"
                 href="https://openid.net/specs/openid-connect-core-1_0.html#ScopeClaims"
                 >ⓘ</a
-              ></label
-            >
+              >
+              </label>
             <input id="scope" type="text" placeholder="openid" />
           </div>
           <div class="stack">
-            <label for="authParams"
-              >Additional auth params
+            <label for="authParams">Additional auth params
               <a
                 target="_blank"
                 href="https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest"
@@ -118,35 +145,10 @@
               placeholder="prompt=login&login_hint=user@example.org"
             />
           </div>
-          <div class="stack">
-            <label></label>
-            <button id="resetConfig" class="secondaryAction" 
-              data-tooltip="Configuration is stored automtically when OAuth login is started. Reset to defaults here." class="tooltip-top">
-              Reset config
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section id="request">
-        <h2>Login Request</h2>
-        <button id="startButton" class="primaryAction">
-          Start OAuth login
-        </button>
-
-        <button id="refreshButton" class="pseudo" hidden=true>
-          Refresh
-        </button>
-
-        <button id="userinfoButton" class="pseudo" hidden=true>
-          Userinfo Request
-        </button>
-        
-        <button id="logoutButton" class="pseudo" hidden=true>
-          Logout
-        </button>
-
-        <div id="notificationContainer"></div>            
+        </div>           
+        <button id="startButton" class="button-primary">Start OAuth login</button>       
+        <button id="logoutButton" class="button-secondary" hidden=true>Logout</button>
+        <div id="loginNotification"/>    
       </section>
 
       <section id="response">
@@ -163,25 +165,29 @@
           <input id="tab-userinfoToken" type="radio" name="tabgroupResult" />
           <label class="pseudo button toggle" for="tab-userinfoToken">User Info</label>
           <div class="row">
-            <div>
-              <div id="responseContainer" style="overflow-x: auto;">
-                <p>Response from token endpoint will show up here.</p>
-              </div>
+            <div class="card">
+              <section>
+                <button id="refreshButton" class="button-secondary" hidden=true>Refresh</button>
+                <div id="refreshNotification"/>                
+                <div id="responseContainer" style="overflow-x: auto;">Response will be available after successful login.</div>
+              </section>
             </div>
-            <div>
-              <div id="idTokenContainer">
-                <p>ID Token claims will show up here.</p>
-              </div>
+            <div class="card">
+              <section>
+                <div id="idTokenContainer">ID Token will be available after successful login.</div>
+              </section>
             </div>
-            <div>
-              <div id="accessTokenContainer">
-                <p>Access Token claims will show up here.</p>
-              </div>
+            <div class="card">
+              <section>
+                <div id="accessTokenContainer">Access Token will be available after successful login.</div>
+              </section>
             </div>
-            <div>
-              <div id="userinfoContainer">
-                <p>User Info response will show up here.</p>
-              </div>
+            <div class="card">
+              <section>
+                <button id="userinfoButton" class="button-secondary" hidden=true>Userinfo Request</button>                
+                <div id="userInfoNotification"/>
+                <div id="userinfoContainer">User Info will be available after requested.</div>
+              </section>
             </div>          
           </div>
         </div>
@@ -196,14 +202,12 @@
             <input id="tab-idp-idToken" type="radio" name="tabgroupIdpResult" />
             <label class="pseudo button toggle" for="tab-idp-idToken">IdP ID Token</label>
             <input id="tab-idp-accessToken" type="radio" name="tabgroupIdpResult" />
-            <label class="pseudo button toggle" for="tab-idp-accessToken"
-              >IdP Access Token</label
-            >
+            <label class="pseudo button toggle" for="tab-idp-accessToken">IdP Access Token</label>
             <div class="row">
               <div>
-                <div id="idpResponseContainer" style="overflow-x: auto;">
-                  <p></p>
-                </div>
+                 <div id="idpResponseContainer" style="overflow-x: auto;">
+                    <p></p>
+                 </div>
               </div>
               <div>
                 <div id="idpIdTokenContainer">
@@ -227,41 +231,59 @@
           Note: Automated registration is usually not possible for a browser-only application, as cross-origin requests to the registration endpoint aren't allowed.
         </p>
 
-        <h3>A) Configure the client manually</h3> 
-        <p>
-          Add the client through the admin interface of your server:
-          <div id="configureClientManually"></div>
-        </p>  
-
-        <h3>B) Client registration at Keycloak</h3>
-        <p>For client registration at Keycloak you can use an initial access token. Create this token at the Keycloak Admin Console:</p>
-        <ol>
-          <li>Open screen <i>Clients > Initial access token</i></li>
-          <li>Click <i>Create</i>, <i>Save</i> and then copy the token</li>
-        </ol>
-        <p>Call the Keycloak Client registration API endpoint with a HTTP client of your choice, e.g. curl.</p>
-        <b>Example: Keycloak client registration request</b>        
-        <textarea id="keycloakCurlRequest" readonly="true" rows=14 style="font-size: small;"></textarea>
-        <button class="secondaryAction" onclick="navigator.clipboard.writeText(document.getElementById('keycloakCurlRequest').value)">
-          Copy to clipboard
-        </button>
-
-        <h3>C) Dynamic client registration</h3> 
-        <p>
-          This client could be registered at the authorization server with the <a href="https://openid.net/specs/openid-connect-registration-1_0.html">OpenID Connect Dynamic Client Registration</a> protocol. 
-          With this method, you get back the client ID in the response of the server.
-          You may need to add a server specific authorization token or policy which allows this registration.
-        </p>
-        <p>
-          In Keycloak you can modify the <i>Trusted Hosts</i> client registration policy:
-          <div id="keycloakTrustedHostsRegistrationPolicy"></div>
-        </p>
-        <b>Example: Dynamic client registration request</b>
-        <textarea id="dyanmicClientRegistrationCurlRequest" readonly="true" rows=9 style="font-size: small;"></textarea>
-        <button class="secondaryAction" onclick="navigator.clipboard.writeText(document.getElementById('dyanmicClientRegistrationCurlRequest').value)">
-          Copy to clipboard
-        </button>
-        <p>When you have a response from the server, find the client_id value and use it in the <a href="#configuration">configuration</a> of this client application.
+        <div class="tabs three">
+          <input id="tab-reg-a" type="radio" name="tabgroup-register" checked />
+          <label class="pseudo button toggle" for="tab-reg-a">Manual configuration</label>
+          <input id="tab-reg-b" type="radio" name="tabgroup-register" />
+          <label class="pseudo button toggle" for="tab-reg-b">Keycloak Client Registration</label>
+          <input id="tab-reg-c" type="radio" name="tabgroup-register" />
+          <label class="pseudo button toggle" for="tab-reg-c">Dynamic Client Registration</label>
+          <div class="row">
+            <div>
+              <h3>Manual configuration</h3> 
+              <section>
+                Add the client through the admin interface of your server:
+                <div id="configureClientManually"></div>
+              </section>
+            </div>
+            <div>
+              <h3>Keycloak Client Registration</h3> 
+              <section>
+                <p>For client registration at Keycloak you can use an initial access token. Create this token at the Keycloak Admin Console:</p>
+                <ol>
+                  <li>Open screen <i>Clients > Initial access token</i></li>
+                  <li>Click <i>Create</i>, <i>Save</i> and then copy the token</li>
+                </ol>
+                <p>Call the Keycloak Client registration API endpoint with a HTTP client of your choice, e.g. curl.</p>
+                <b>Example: Keycloak client registration request</b>        
+                <textarea id="keycloakCurlRequest" readonly="true" rows=14 style="font-size: small;"></textarea>
+                <button class="button-secondary" onclick="navigator.clipboard.writeText(document.getElementById('keycloakCurlRequest').value)">
+                  Copy to clipboard
+                </button>
+              </section>              
+            </div>
+            <div>
+              <h3>Dynamic client registration</h3> 
+              <section>
+                <p>
+                  This client could be registered at the authorization server with the <a href="https://openid.net/specs/openid-connect-registration-1_0.html">OpenID Connect Dynamic Client Registration</a> protocol. 
+                  With this method, you get back the client ID in the response of the server.
+                  You may need to add a server specific authorization token or policy which allows this registration.
+                </p>
+                <p>
+                  In Keycloak you can modify the <i>Trusted Hosts</i> client registration policy:
+                  <div id="keycloakTrustedHostsRegistrationPolicy"></div>
+                </p>
+                <b>Example: Dynamic client registration request</b>
+                <textarea id="dyanmicClientRegistrationCurlRequest" readonly="true" rows=9 style="font-size: small;"></textarea>
+                <button class="button-secondary" onclick="navigator.clipboard.writeText(document.getElementById('dyanmicClientRegistrationCurlRequest').value)">
+                  Copy to clipboard
+                </button>
+                <p>When you have a response from the server, find the client_id value and use it in the <a href="#configuration">configuration</a> of this client application.                
+              </section>                
+            </div>                        
+          </div>
+        </div>
       </section>
 
       <section id="about">
