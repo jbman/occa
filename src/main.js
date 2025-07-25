@@ -170,8 +170,10 @@ if (code) {
     } else {
       handleTokenError(response);
     }
-    // Set navigation state to top-level URL without URL params
-    history.pushState("", document.title, window.location.origin);
+    // Remove query paremters (code and session_state) and set this as new browser location.
+    const newUrl = new URL(window.location);
+    newUrl.search = "";
+    history.pushState("", document.title, newUrl);    
   };
   xhr.responseType = "json";
   xhr.open("POST", config.tokenEndpoint, true);
