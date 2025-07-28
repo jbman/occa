@@ -1,3 +1,4 @@
+import ClientUrl from "./util/clientUrl";
 import PKCE from "./util/pkce";
 import Render from "./util/render";
 import Config from "./util/config";
@@ -28,14 +29,8 @@ const ELEMENTS = {
   loginNotification: "loginNotification"
 }
 
-// Redirection URI is same as application URL, but remove parameters and hash (#) and append slash if missing
-const redirectURL = new URL(window.location.href);
-redirectURL.hash = '';
-redirectURL.search = '';
-if (redirectURL.pathname.endsWith('/'))
-redirectURL.pathname = redirectURL.pathname + (redirectURL.pathname.endsWith('/') ? "": "/");
-const redirectUri = redirectURL.href;
-// Remove trailing lsash to get the root URL
+const redirectUri = ClientUrl.resolveRedirctUri(window.location.href);
+// Remove trailing slash to get the root URL
 const rootUrl = redirectUri.slice(0, redirectUri.length-1);
 
 // Render redirectUri
