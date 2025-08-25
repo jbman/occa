@@ -1,8 +1,16 @@
 var userinfoButtonElement;
 var accessToken;
 
-// Init method to find the HTML element which triggers the userinfo request.
-function init(config, onResponse, onError) {
+/**
+ * Configure the element which requests OpenID Connect userinfo.
+ * 
+ * @param {Object} userinfoConfig - The userinfo action configuration
+ * @param {Object} userinfoConfig.config - Values for the the userinfo request
+ * @param {Object} userinfoConfig.config.userinfoEndpoint - The endpoint to request the userinfo object.
+ * @param {function} userinfoConfig.onResponse - The function executed after a successful userinfo request. It gets the userinfo object as input param.
+ * @param {function} userinfoConfig.onError -  The function executed after an error from the userinfo endpoint.
+ */
+function init({config, onResponse, onError}) {
   userinfoButtonElement = document.getElementById("userinfoButton");
   userinfoButtonElement.onclick = function () {
     _userinfoRequest(config.userinfoEndpoint, onResponse, onError);

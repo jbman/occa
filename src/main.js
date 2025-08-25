@@ -105,21 +105,24 @@ ClientRegistration.render({
 
 // Initialize "Load Discovery document" functionality and handle discovery doeument response
 Discovery.init(
-  (discoveryEndpointUrl, discoveryJSON) => {
-  config = Config.writeInputElements({
-      // ...config, // Merge discovery values into existing persisted config incl. client ID or scope (reset to default this way)
-      ...Config.readInputElements(config),
-      discoveryEndpoint: discoveryEndpointUrl, // Persist URL from input
-      authorizationEndpoint: discoveryJSON.authorization_endpoint,
-      tokenEndpoint: discoveryJSON.token_endpoint,
-      userinfoEndpoint: discoveryJSON.userinfo_endpoint,
-      logoutEndpoint: discoveryJSON.end_session_endpoint,
-    });
-    Render.renderConfig(config);
-    Render.notifySuccess(`Endpoints updated from discovery document ${discoveryEndpointUrl}.`, ELEMENTS.loadDiscoveryNotification);
-  },
-  (discoveryEndpointUrl, errorMessage) => {
-    Render.notifyError(`Error response from ${discoveryEndpointUrl}: ${errorMessage}`, ELEMENTS.loadDiscoveryNotification);
+  {
+    onResponse: (discoveryEndpointUrl, discoveryJSON) => 
+      {
+      config = Config.writeInputElements({
+          // ...config, // Merge discovery values into existing persisted config incl. client ID or scope (reset to default this way)
+          ...Config.readInputElements(config),
+          discoveryEndpoint: discoveryEndpointUrl, // Persist URL from input
+          authorizationEndpoint: discoveryJSON.authorization_endpoint,
+          tokenEndpoint: discoveryJSON.token_endpoint,
+          userinfoEndpoint: discoveryJSON.userinfo_endpoint,
+          logoutEndpoint: discoveryJSON.end_session_endpoint,
+        });
+        Render.renderConfig(config);
+        Render.notifySuccess(`Endpoints updated from discovery document ${discoveryEndpointUrl}.`, ELEMENTS.loadDiscoveryNotification);
+      },
+    onError: (discoveryEndpointUrl, errorMessage) => {
+      Render.notifyError(`Error response from ${discoveryEndpointUrl}: ${errorMessage}`, ELEMENTS.loadDiscoveryNotification);
+    }
   }
 );
 // Load automatically, so that "Start login" could be used right away.
@@ -127,9 +130,12 @@ Discovery.load();
 
 // Initialize Refresh functionality
 Refresh.init(
-  config, 
-  (response) => { handleTokenResponse(response); Render.notifySuccess("Refresh complete, tokens updated.", ELEMENTS.refreshNotification); },
-  handleTokenError
+  {
+    config: config,
+    onResponse: (response) => 
+      { handleTokenResponse(response); Render.notifySuccess("Refresh complete, tokens updated.", ELEMENTS.refreshNotification); },
+    onError: handleTokenError
+  }
 );
 
 // Initialize Logout functionality
@@ -148,16 +154,18 @@ Logout.init(
 );
 
 Userinfo.init(
-  config,
-  (response) => {
-    Render.renderUserInfo(response);
-    Render.notifySuccess("User Info updated.", ELEMENTS.userInfoNotification);    
-  },
-  (response) => {
-    console.log("Error from userinfo endpoint: " + response);
+  {
+    config: config,
+    onResponse: (response) => {
+      Render.renderUserInfo(response);
+      Render.notifySuccess("User Info updated.", ELEMENTS.userInfoNotification);
+    },
+    onError: (response) => {
+      console.log("Error from userinfo endpoint: " + response);
+      Render.notifyError(`Error from userinfo endpoint`, ELEMENTS.userInfoNotification);
+    }
   }
 );
-
 
 // Check if code is provided on callback from auth server at "/code" or 
 const args = new URLSearchParams(window.location.search);

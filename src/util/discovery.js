@@ -1,7 +1,14 @@
 let discoveryButtonElement;
 let discoveryEndpointElement;
 
-function init(onResponse, onError) {
+/** 
+* Configure the elements to load values from the OpenID Connect discovery doucement.
+*
+* @param {Object} discoveryConfig - The userinfo action configuration
+* @param {function} discoveryConfig.onResponse - The function executed after a successful discovery request.
+* @param {function} discoveryConfig.onError -  The function executed after an error from the discovery endpoint.
+*/
+function init({onResponse, onError}) {
   discoveryButtonElement = document.getElementById("discoveryButton");
   discoveryEndpointElement = document.getElementById("discoveryEndpoint");
   discoveryButtonElement.onclick = function () {
