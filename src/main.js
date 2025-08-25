@@ -134,13 +134,16 @@ Refresh.init(
 
 // Initialize Logout functionality
 Logout.init(
-  config.logoutEndpoint,
-  () => {
-    return IdTokenStore.get();
-  },
-  () => {
-    Refresh.onLogout();
-    IdTokenStore.discard();
+  {
+    logoutEndpoint: config.logoutEndpoint,
+    postLogoutRedirectUri: rootUrl,
+    idTokenProviderFn: () => {
+      return IdTokenStore.get();
+    },
+    onLogout: () => {
+      Refresh.onLogout();
+      IdTokenStore.discard();
+    }
   }
 );
 
