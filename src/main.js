@@ -1,6 +1,5 @@
 import AuthRequest from "./util/authRequest";
 import ClientUrl from "./util/clientUrl";
-import PKCE from "./util/pkce";
 import Render from "./util/render";
 import Config from "./util/config";
 import BrokeredToken from "./keycloak/brokeredToken";
