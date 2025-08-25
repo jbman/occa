@@ -16,12 +16,13 @@ function load(defaultConfig) {
   }
 
   if (sessionConfig) {
-    console.log("Config from session storage available: " + sessionConfig);
     try {
       config = JSON.parse(sessionConfig);
+      console.log("Config loaded from session storage", config);
     } catch (error) {
       // Remove unparsable config
       window.sessionStorage.removeItem("config");
+      console.log("Unparsable config removed from session storage");
     }
   }
   return writeInputElements(config);
@@ -79,6 +80,7 @@ function readInputElements(config) {
 function storeInputValues(config) {
   config = readInputElements(config);
   window.sessionStorage.setItem("config", JSON.stringify(config));
+  console.log("Config stored at session storage", config);
 }
 
 function reset(defaultConfig) {

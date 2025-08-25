@@ -1,3 +1,4 @@
+import AuthRequest from "./util/authRequest";
 import ClientUrl from "./util/clientUrl";
 import PKCE from "./util/pkce";
 import Render from "./util/render";
@@ -18,7 +19,7 @@ const defaultConfig = {
   logoutEndpoint: "",
   userinfoEndpoint: "",
   scope: "openid",
-  authParams: "",
+  authParams: ""
 };
 
 const ELEMENTS = {
@@ -36,38 +37,7 @@ const rootUrl = redirectUri.slice(0, redirectUri.length-1);
 // Render redirectUri
 document.getElementById("redirectUri").innerHTML = redirectUri;
 
-// Button to start auth flow
-document.getElementById("startButton").onclick = function () {
-  Config.storeInputValues(config);
 
-  var codeVerifier = PKCE.generateRandomString(64);
-
-  Promise.resolve()
-    .then(() => {
-      return PKCE.generateCodeChallenge(codeVerifier);
-    })
-    .then(function (codeChallenge) {
-      window.sessionStorage.setItem("code_verifier", codeVerifier);
-
-      const args = new URLSearchParams({
-        response_type: "code",
-        client_id: config.clientId,
-        code_challenge_method: PKCE.challengeMethod(),
-        code_challenge: codeChallenge,
-        redirect_uri: redirectUri,
-        scope: config.scope,
-      });
-      let newLocation = config.authorizationEndpoint + "/?" + args;
-      // Add additional parameters if any
-      if (config.authParams != null && config.authParams.trim() !== "") {
-        newLocation += "&" + config.authParams;
-      }
-      console.log(
-        "Set new location to start authorization flow: " + newLocation
-      );
-      window.location = newLocation;
-    });
-};
 
 // Button to reset config
 document.getElementById("resetConfig").onclick = function () {
@@ -80,6 +50,14 @@ let config = Config.load(defaultConfig);
 // Merge parameters from URL into config
 config = Config.readFromUrl(config, new URLSearchParams(window.location.search).entries());
 Render.renderConfig(config);
+
+// Configure button which starts auth flow
+document.getElementById("startButton").onclick = function () {
+  // Store current values for next login
+  Config.storeInputValues(config);
+  // Navigate to the login page
+  AuthRequest.startLogin(redirectUri, config);
+}
 
 // When a token response is received, this function is called to render the response
 // and provide the reposne to other UI modules.
