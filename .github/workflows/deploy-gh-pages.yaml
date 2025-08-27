@@ -17,6 +17,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Get short commit SHA
+        run: echo "COMMIT_ID=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+        
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -32,6 +35,16 @@ jobs:
         env:
           NODE_ENV: production
 
+      - name: Add commit info page
+        run: |
+          echo "<!DOCTYPE html><html><body>" > dist/commit.html
+          echo "<p>Built from commit <a href='https://github.com/${{ github.repository }}/commit/${{ github.sha }}'>__COMMIT_ID__</a></p>" >> dist/commit.html
+          echo "</body></html>" >> dist/commit.html
+          
+      - name: Inject commit into HTML files
+        run: |
+          find dist -type f -name "*.html" -exec sed -i "s/__COMMIT_ID__/<a href='https:\/\/github.com\/${{ github.repository }}\/commit\/${{ github.sha }}'>${{ env.COMMIT_ID }}<\/a>/g" {} +
+          
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
