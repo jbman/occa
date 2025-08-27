@@ -38,12 +38,12 @@ jobs:
       - name: Add commit info page
         run: |
           echo "<!DOCTYPE html><html><body>" > dist/commit.html
-          echo "<p>Built from commit <a href='https://github.com/${{ github.repository }}/commit/${{ github.sha }}'>__COMMIT_ID__</a></p>" >> dist/commit.html
+          echo "<p>Built from commit __COMMIT_LINK__</p>" >> dist/commit.html
           echo "</body></html>" >> dist/commit.html
           
       - name: Inject commit into HTML files
         run: |
-          find dist -type f -name "*.html" -exec sed -i "s|__COMMIT_ID__|<a href='https://github.com/${{ github.repository }}/commit/${{ github.sha }}'>${{ env.COMMIT_ID }}</a>|g" {} +
+          find dist -type f -name "*.html" -exec sed -i "s|__COMMIT_LINK__|<a href='https://github.com/${{ github.repository }}/commit/${{ github.sha }}'>${{ env.COMMIT_ID }}</a>|g" {} +
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
