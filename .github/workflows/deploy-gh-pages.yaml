@@ -43,7 +43,7 @@ jobs:
           
       - name: Inject commit into HTML files
         run: |
-          ind dist -type f -name "*.html" -exec sed -i "s|__COMMIT_ID__|<a href='https://github.com/${{ github.repository }}/commit/${{ github.sha }}'>${{ env.COMMIT_ID }}</a>|g" {} +
+          find dist -type f -name "*.html" -exec sed -i "s|__COMMIT_ID__|<a href='https://github.com/${{ github.repository }}/commit/${{ github.sha }}'>${{ env.COMMIT_ID }}</a>|g" {} +
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
