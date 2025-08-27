@@ -7,7 +7,9 @@ on:
       - main  # Or 'master', depending on your default branch
 
 permissions:
-  contents: write  # Required to push to gh-pages branch
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build-deploy:
@@ -44,10 +46,19 @@ jobs:
       - name: Inject commit into HTML files
         run: |
           find dist -type f -name "*.html" -exec sed -i "s|__COMMIT_LINK__|<a href='https://github.com/${{ github.repository }}/commit/${{ github.sha }}'>${{ env.COMMIT_ID }}</a>|g" {} +
-          
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-
+          path: ./dist          
+          
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
