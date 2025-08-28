@@ -1,14 +1,35 @@
-# OCCA
+ OCCA
 
-OCCA is an **O**penID **C**onnect **C**lient **A**pplication. It is a plain HTML and Javascript single-page application.
+OCCA is an **O**penID **C**onnect **C**lient **A**pplication. It is a plain HTML and JavaScript single-page application.
 
-OCCA was built to have a tool for exploring and testing OpenID Connect login without dependcies on any OAuth 2.0 or OpenID Connect library. 
+OCCA was built as a tool for exploring and testing OpenID Connect logins without relying on an existing OAuth 2.0 or OpenID Connect library.
 
 # Usage
 
-OCCA is there to execute OpenID Connect logins against an OAuth 2.0 authorization server or OpenID Connect identity provider. You need register OCCA as clientat your an authorization server like [Keycloak](https://github.com/keycloak/keycloak). Then you configure the client ID and relevant server endpoint at OCCA. Now you are ready to execute a login and you can check resulting tokens with OCCA.
+With OCCA, you can perform OpenID Connect logins against an OAuth 2.0 authorization server or OpenID Connect identity provider.
 
-The latest version of OCCA can be used at online at https://jbman.github.io/occa
+### Steps:
+
+1. **Register OCCA as a client**  
+   - Go to your authorization server (e.g., [Keycloak](https://github.com/keycloak/keycloak)).  
+   - Create a new client application entry for OCCA.  
+
+2. **Configure OCCA**  
+   - Enter the client ID and the relevant server endpoints (authorization, token, and user info endpoints).  
+
+3. **Run a login**  
+   - Use OCCA to initiate a login request against your server.  
+   - After a successful login, OCCA will display the resulting tokens (ID token, access token, etc.).  
+
+4. **Inspect tokens**  
+   - View and analyze the tokens directly in OCCA to verify claims, expiration, and scopes.  
+
+The latest version of OCCA is available online at:  
+👉 https://jbman.github.io/occa
+
+# Install
+
+Install and build with:
 
 # Install
 
@@ -19,9 +40,9 @@ npm install
 npm run build
 ```
 
-This creates a `dist` folder with all application files. You can serve them with a web server of you choice.
+This creates a `dist` folder with all application files. You can serve them with a web server of your choice.
 
-For development you can serve the application at http://localhost:1234 by running
+For development, you can serve the application at http://localhost:1234 by running:
 
 ```
 npm start
