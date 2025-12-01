@@ -61,13 +61,24 @@
               </footer>
             </div>
             <div class="card config">
-              <section>
-                <div>
-                  <a href="#register-client">Register a client</a> with this ID as OAuth client at the authorization server with redirect URI <code id=redirectUri></code>.                
-                </div>                 
-                <label for="clientId">Client ID</label>
-                <input id="clientId" type="text" placeholder="my-client-id" />                  
-              </section>
+                <section>
+                    <div>
+                        <a href="#register-client">Register a client</a> with this ID as OAuth client at the
+                        authorization server with redirect URI <code id=redirectUri></code>.
+                    </div>
+                    <div class="clientConfiguration">
+                        <div>
+                            <label for="clientId">Client ID</label>
+                            <input id="clientId" type="text" placeholder="my-client-id"/>
+                        </div>
+                        <div>
+                            <label class="dpop-label" for="dpopEnabled">
+                                Enable DPoP
+                                <input id="dpopEnabled" type="checkbox">
+                            </label>
+                        </div>
+                    </div>
+                </section>
               <footer>
                 <label class="button button-nav" for="tab-endpoints">Go to Endpoints</label>
               </footer>
