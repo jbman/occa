@@ -32,8 +32,8 @@ The latest version of OCCA is available online at:
 Install and build with 
 
 ```
-pnpm install --frozen-lockfile
-pnpm run build
+npm install
+npm run build
 ```
 
 This creates a `dist` folder with all application files. You can serve them with a web server of your choice.
@@ -41,7 +41,7 @@ This creates a `dist` folder with all application files. You can serve them with
 For development, you can serve the application at http://localhost:1234 by running:
 
 ```
-pnpm start
+npm start
 ```
 
 ## License
