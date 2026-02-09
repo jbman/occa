@@ -1,5 +1,7 @@
 // Based on code from https://github.com/curityio/pkce-javascript-example which is publichsed under Apache 2.0 License
 
+import {base64UrlEncode} from "./base64Util";
+
 const method = crypto.subtle ? "S256" : "plain";
 _warnIfNoCrypto();
 
@@ -14,10 +16,7 @@ async function generateCodeChallenge(codeVerifier) {
       new TextEncoder().encode(codeVerifier)
     );
 
-    return btoa(String.fromCharCode(...new Uint8Array(digest)))
-      .replace(/=/g, "")
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_");
+    return base64UrlEncode(digest);
   }
   if (method === "plain") {
     return codeVerifier;

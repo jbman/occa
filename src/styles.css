@@ -93,6 +93,20 @@ section:target {
   }
 }
 
+/* DPoP Checkbox */
+#dpopEnabled {
+    margin-left: 0.5rem;
+    width: auto;
+    height: auto;
+    position: static;
+    opacity: 1;
+}
+
+.clientConfiguration div:first-of-type {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 /* Notification styling */
 #notificationContainer {
   overflow: hidden;

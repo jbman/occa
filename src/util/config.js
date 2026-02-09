@@ -48,7 +48,12 @@ function writeInputElements(config) {
   for (const prop in config) {
     const node = document.getElementById(prop);
     if (node) {
-      node.value = config[prop];
+        if(node.type === "checkbox")
+        {
+            node.checked = config[prop];
+        } else {
+            node.value = config[prop];
+        }
       /*
       console.log(
         `Element value of '${node.id}' set to config[${prop}] = '${config[prop]}'`
@@ -64,12 +69,16 @@ function readInputElements(config) {
   for (const prop in config) {
     const node = document.getElementById(prop);
     if (node) {
-      config[prop] = node.value;
+        if(node.type === "checkbox") {
+            config[prop] = node.checked;
+        } else {
+            config[prop] = node.value;
+        }
       /*
       console.log(
         `config.${prop} set to value of element '${node.id}' which is '${config[prop]}'`
       );
-      */
+       */
     }
   }
   return config;
