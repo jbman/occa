@@ -52,7 +52,7 @@ async function main() {
     let config = Config.load(defaultConfig);
 // Merge parameters from URL into config
     config = Config.readFromUrl(config, new URLSearchParams(window.location.search).entries());
-    Render.renderConfig(config);
+    Render.renderConfig(config, Config.createConfigLink(rootUrl, config));
 
 // Checkbox for DPoP request
     const checkbox = document.getElementById("dpopEnabled");
@@ -106,6 +106,10 @@ async function main() {
                     logoutEndpoint: discoveryJSON.end_session_endpoint,
                 });
                 Render.renderConfig(config);
+                Render.renderConfig(
+                  config,
+                  Config.createConfigLink(rootUrl, config)
+                );                
                 Render.notifySuccess(`Endpoints updated from discovery document ${discoveryEndpointUrl}.`, ELEMENTS.loadDiscoveryNotification);
             },
             onError: (discoveryEndpointUrl, errorMessage) => {

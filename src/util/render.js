@@ -6,10 +6,21 @@ const formatterConfig = {
   animateClose: true,
 };
 
-function renderConfig(config) {
+function renderConfig(config, configShareLink) {
   document
-  .getElementById("currentConfig")
-  .replaceChildren(new JSONFormatter(config, 1, formatterConfig).render());
+    .getElementById("currentConfig")
+    .replaceChildren(new JSONFormatter(config, 1, formatterConfig).render());
+
+  _renderConfigLink(
+    configShareLink,
+    "OCCA for " + new URL(config.discoveryEndpoint).host
+  );
+}
+
+function _renderConfigLink(link, text) {
+  const configLink = document.getElementById("configLink");
+  configLink.setAttribute("href", link);
+  configLink.textContent = text;
 }
 
 function renderAuthResponse(response) {

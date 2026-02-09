@@ -42,6 +42,21 @@ function readFromUrl(config, urlSearchParamEntries) {
   return writeInputElements(mergedConfig);
 }
 
+// Returns a string with search prarams which can be read with readFromUrl(...)
+function createConfigLink(rootUrl, config) {
+  const params = [];
+  for (const prop in config) {
+    const value = config[prop];
+    if(typeof value == "boolean") {
+      params.push(prop);
+    }
+    if (value != null && value.length > 0) {
+      params.push(prop + "=" + encodeURIComponent(value));
+    }
+  }
+  return rootUrl + "?" + params.join("&");
+}
+
 // Populate config object to input elements and return the same unmodified config object.
 // This should be done when code (and not user) modified the config object.
 function writeInputElements(config) {
@@ -100,6 +115,7 @@ function reset(defaultConfig) {
 export default {
   load,
   readFromUrl,
+  createConfigLink,  
   writeInputElements,
   readInputElements,
   storeInputValues,
