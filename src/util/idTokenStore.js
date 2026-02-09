@@ -15,5 +15,5 @@ function discard() {
 export default {
   store: store,
   get: get,
-  discard: discard
+  discard: discard,
 };

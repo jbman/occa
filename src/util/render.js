@@ -13,7 +13,7 @@ function renderConfig(config, configShareLink) {
 
   _renderConfigLink(
     configShareLink,
-    "OCCA for " + new URL(config.discoveryEndpoint).host
+    "OCCA for " + new URL(config.discoveryEndpoint).host,
   );
 }
 
@@ -33,8 +33,8 @@ function renderAuthResponse(response) {
       new JSONFormatter(
         JWT.decode(response.id_token),
         2,
-        formatterConfig
-      ).render()
+        formatterConfig,
+      ).render(),
     );
   document
     .getElementById("accessTokenContainer")
@@ -42,8 +42,8 @@ function renderAuthResponse(response) {
       new JSONFormatter(
         JWT.decode(response.access_token),
         2,
-        formatterConfig
-      ).render()
+        formatterConfig,
+      ).render(),
     );
 }
 
@@ -56,8 +56,7 @@ function renderUserInfo(response) {
 function renderNotification(type, text, targetId) {
   const notification = document.createElement("label");
   notification.classList.add("notification");
-  notification.innerHTML = 
-  `<input type="checkbox" class="alertCheckbox" autocomplete="off" />
+  notification.innerHTML = `<input type="checkbox" class="alertCheckbox" autocomplete="off" />
   <div class="alert ${type}">
     <span class="alertClose">X</span>
     <span class="alertText">${text}</span>
@@ -66,15 +65,15 @@ function renderNotification(type, text, targetId) {
 }
 
 function notifySuccess(text, targetId) {
-  renderNotification("success", text, targetId)
+  renderNotification("success", text, targetId);
 }
 
 function notifyInfo(text, targetId) {
-  renderNotification("info", text, targetId)
+  renderNotification("info", text, targetId);
 }
 
 function notifyError(text, targetId) {
-  renderNotification("error", text, targetId)
+  renderNotification("error", text, targetId);
 }
 
 export default {
@@ -83,5 +82,5 @@ export default {
   renderUserInfo,
   notifySuccess,
   notifyInfo,
-  notifyError
+  notifyError,
 };

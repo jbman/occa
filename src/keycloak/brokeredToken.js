@@ -3,7 +3,7 @@ import JSONFormatter from "json-formatter-js";
 
 const formatterConfig = {
   animateOpen: true,
-  animateClose: true
+  animateClose: true,
 };
 
 function renderResponse(response) {
@@ -17,8 +17,8 @@ function renderResponse(response) {
       new JSONFormatter(
         JWT.decode(response.id_token),
         2,
-        formatterConfig
-      ).render()
+        formatterConfig,
+      ).render(),
     );
   document
     .getElementById("idpAccessTokenContainer")
@@ -26,8 +26,8 @@ function renderResponse(response) {
       new JSONFormatter(
         JWT.decode(response.access_token),
         2,
-        formatterConfig
-      ).render()
+        formatterConfig,
+      ).render(),
     );
 }
 
@@ -41,7 +41,7 @@ async function fetchIdpIdToken(bearerToken, idTokenEncoded) {
   // Check if URL for fetching ID token of target IdP is available as claim in ID token
   if (idTokenEncoded == null) {
     console.log(
-      "Original tokens could not be be fetched: No ID token available"
+      "Original tokens could not be be fetched: No ID token available",
     );
     renderHideResponse();
     return;
@@ -49,7 +49,7 @@ async function fetchIdpIdToken(bearerToken, idTokenEncoded) {
   const idToken = JWT.decode(idTokenEncoded);
   if (idToken.claims.idp_alias == null) {
     console.log(
-      "Original tokens could not be be fetched: Claim 'idp_alias' not present in ID token"
+      "Original tokens could not be be fetched: Claim 'idp_alias' not present in ID token",
     );
     renderHideResponse();
     return;
@@ -66,19 +66,22 @@ async function fetchIdpIdToken(bearerToken, idTokenEncoded) {
   fetch(url, {
     headers: {
       Accept: "application/json",
-      Authorization: "Bearer " + bearerToken
-    }
-  }).then((response) => response.json())
+      Authorization: "Bearer " + bearerToken,
+    },
+  })
+    .then((response) => response.json())
     .then((data) => {
       console.log("Original tokens could be fetched.");
       renderResponse(data);
     })
     .catch((error) => {
-      console.log("Could not fetch token. Cross-Origin Request Blocked? Please check if the user has role 'broker.read-token' and the access token has the role listed at claim resource_access.");
+      console.log(
+        "Could not fetch token. Cross-Origin Request Blocked? Please check if the user has role 'broker.read-token' and the access token has the role listed at claim resource_access.",
+      );
       console.error("Error:", error);
     });
 }
 
 export default {
-  fetchIdpIdToken: fetchIdpIdToken
+  fetchIdpIdToken: fetchIdpIdToken,
 };

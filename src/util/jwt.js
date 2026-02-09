@@ -14,12 +14,17 @@ function decode(jwt) {
 function base64UrlDecode(input) {
   // Based on https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript-without-using-a-library
   // Replace replace "-" with "+" and "_" with "/"
-  let base64 = input.replace(/-/g, '+').replace(/_/g, '/');
-  return decodeURIComponent(atob(base64).split('').map(function(c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
+  let base64 = input.replace(/-/g, "+").replace(/_/g, "/");
+  return decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join(""),
+  );
 }
 
 export default {
-  decode: decode
+  decode: decode,
 };

@@ -1,6 +1,6 @@
 // Based on code from https://github.com/curityio/pkce-javascript-example which is publichsed under Apache 2.0 License
 
-import {base64UrlEncode} from "./base64Util";
+import { base64UrlEncode } from "./base64Util";
 
 const method = crypto.subtle ? "S256" : "plain";
 _warnIfNoCrypto();
@@ -13,7 +13,7 @@ async function generateCodeChallenge(codeVerifier) {
   if (method === "S256") {
     var digest = await crypto.subtle.digest(
       "SHA-256",
-      new TextEncoder().encode(codeVerifier)
+      new TextEncoder().encode(codeVerifier),
     );
 
     return base64UrlEncode(digest);
@@ -43,7 +43,7 @@ function _warnIfNoCrypto() {
         '<p>Javascript crypto services require that this site is served in a <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts">secure context</a>; ' +
         "either from <b>(*.)localhost</b> or via <b>https</b>. </p>" +
         '<p> You can add an entry to /etc/hosts like "127.0.0.1 public-test-client.localhost" and reload the site from there, enable SSL using something like <a href="https://letsencrypt.org/">letsencypt</a>, or refer to this <a href="https://stackoverflow.com/questions/46468104/how-to-use-subtlecrypto-in-chrome-window-crypto-subtle-is-undefined">stackoverflow article</a> for more alternatives.</p>' +
-        "<p>If Javascript crypto is available this message will disappear.</p>"
+        "<p>If Javascript crypto is available this message will disappear.</p>",
     );
   }
 }
@@ -51,5 +51,5 @@ function _warnIfNoCrypto() {
 export default {
   challengeMethod: challengeMethod,
   generateCodeChallenge: generateCodeChallenge,
-  generateRandomString: generateRandomString
+  generateRandomString: generateRandomString,
 };

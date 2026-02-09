@@ -28,13 +28,16 @@ function load(defaultConfig) {
   return writeInputElements(config);
 }
 
-// Merge config options from URL parameters into provided config. 
+// Merge config options from URL parameters into provided config.
 // All keys present in provided config object can also be provided as URL parameter.
 function readFromUrl(config, urlSearchParamEntries) {
-  let mergedConfig = { ...config };  
-  console.log("Following config properties can be provided as URL parameters: " + Object.keys(config).join(', '));
+  let mergedConfig = { ...config };
+  console.log(
+    "Following config properties can be provided as URL parameters: " +
+      Object.keys(config).join(", "),
+  );
   for (const [key, value] of urlSearchParamEntries) {
-    if( key in config) {
+    if (key in config) {
       console.log(`Config option provided as URL parameter: ${key}=${value}`);
       mergedConfig[key] = value;
     }
@@ -47,7 +50,7 @@ function createConfigLink(rootUrl, config) {
   const params = [];
   for (const prop in config) {
     const value = config[prop];
-    if(typeof value == "boolean") {
+    if (typeof value == "boolean") {
       params.push(prop);
     }
     if (value != null && value.length > 0) {
@@ -63,12 +66,11 @@ function writeInputElements(config) {
   for (const prop in config) {
     const node = document.getElementById(prop);
     if (node) {
-        if(node.type === "checkbox")
-        {
-            node.checked = config[prop];
-        } else {
-            node.value = config[prop];
-        }
+      if (node.type === "checkbox") {
+        node.checked = config[prop];
+      } else {
+        node.value = config[prop];
+      }
       /*
       console.log(
         `Element value of '${node.id}' set to config[${prop}] = '${config[prop]}'`
@@ -84,11 +86,11 @@ function readInputElements(config) {
   for (const prop in config) {
     const node = document.getElementById(prop);
     if (node) {
-        if(node.type === "checkbox") {
-            config[prop] = node.checked;
-        } else {
-            config[prop] = node.value;
-        }
+      if (node.type === "checkbox") {
+        config[prop] = node.checked;
+      } else {
+        config[prop] = node.value;
+      }
       /*
       console.log(
         `config.${prop} set to value of element '${node.id}' which is '${config[prop]}'`
@@ -115,7 +117,7 @@ function reset(defaultConfig) {
 export default {
   load,
   readFromUrl,
-  createConfigLink,  
+  createConfigLink,
   writeInputElements,
   readInputElements,
   storeInputValues,

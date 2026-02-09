@@ -1,15 +1,20 @@
 var logoutButtonElement;
 
-/** 
+/**
  * Configure the element which executes the logout.
- * 
+ *
  * @param {Object} logoutConfig - the logout configuration
  * @param {string} postLogoutRedirectUri - The URI to be opened after logout.
  * @param {string} logoutConfig.logoutEndpoint - The endpoint where the user is send for logout
  * @param {function} logoutConfig.idTokenProviderFn - The provider of the ID token for the logout request.
  * @param {function} logoutConfig -  A callback function which gets executed before navigating to the logout endpoint.
  */
-function init({logoutEndpoint, postLogoutRedirectUri, idTokenProviderFn, onLogout}) {
+function init({
+  logoutEndpoint,
+  postLogoutRedirectUri,
+  idTokenProviderFn,
+  onLogout,
+}) {
   logoutButtonElement = document.getElementById("logoutButton");
   logoutButtonElement.onclick = function () {
     if (!logoutEndpoint || logoutEndpoint.length === 0) {
@@ -19,7 +24,7 @@ function init({logoutEndpoint, postLogoutRedirectUri, idTokenProviderFn, onLogou
     let endSessionUrl = _buildEndSessionUrl(
       logoutEndpoint,
       idTokenProviderFn(),
-      postLogoutRedirectUri
+      postLogoutRedirectUri,
     );
     onLogout();
     // Navigate to Logout endpoint of IdP
@@ -35,12 +40,12 @@ function onLogin() {
 function _buildEndSessionUrl(
   logoutEndpoint,
   idTokenEncoded,
-  postLogoutRedirectUri
+  postLogoutRedirectUri,
 ) {
   return `${logoutEndpoint}?id_token_hint=${idTokenEncoded}&post_logout_redirect_uri=${postLogoutRedirectUri}`;
 }
 
 export default {
   init,
-  onLogin
+  onLogin,
 };
